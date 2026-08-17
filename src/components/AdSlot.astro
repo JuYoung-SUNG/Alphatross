@@ -1,0 +1,35 @@
+---
+/**
+ * 애드센스 광고 자리.
+ * consts.ts 의 ADSENSE_CLIENT 가 비어 있으면 아무것도 렌더링하지 않습니다.
+ * 승인 심사 중에는 광고를 넣지 않는 편이 안전하며, 승인 후 slot 값을 채워 사용하세요.
+ *
+ * 주의: 광고 배치는 콘텐츠보다 많아 보이지 않도록 한 페이지에 2~3개 이내를 권장합니다.
+ */
+import { ADSENSE_CLIENT } from '../consts';
+
+export interface Props {
+  /** 애드센스에서 발급받은 광고 단위 슬롯 ID */
+  slot?: string;
+  format?: string;
+}
+const { slot = '', format = 'auto' } = Astro.props;
+const enabled = Boolean(ADSENSE_CLIENT && slot);
+---
+
+{enabled && (
+  <aside class="ad-slot" aria-label="광고">
+    <small>광고</small>
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={ADSENSE_CLIENT}
+      data-ad-slot={slot}
+      data-ad-format={format}
+      data-full-width-responsive="true"
+    />
+    <script is:inline>
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </aside>
+)}

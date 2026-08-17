@@ -1,0 +1,40 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import type { Crumb } from '../components/Breadcrumbs.astro';
+
+export interface Props {
+  title: string;
+  /** <h1> 에 쓸 제목. 없으면 title 을 그대로 사용 */
+  heading?: string;
+  description?: string;
+  lead?: string;
+  crumbs?: Crumb[];
+  type?: 'website' | 'article';
+  publishedAt?: string;
+  updatedAt?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** 본문 폭을 좁게(읽기 최적) 할지 여부 */
+  narrow?: boolean;
+}
+
+const {
+  title,
+  heading,
+  description,
+  lead,
+  crumbs = [],
+  narrow = true,
+  ...rest
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description} {...rest}>
+  <div class:list={['wrap', narrow && 'wrap-narrow']}>
+    {crumbs.length > 0 && <Breadcrumbs items={crumbs} />}
+    <h1>{heading ?? title}</h1>
+    {lead && <p class="page-lead">{lead}</p>}
+    <slot />
+  </div>
+</BaseLayout>

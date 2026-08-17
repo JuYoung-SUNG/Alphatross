@@ -1,0 +1,22 @@
+{
+  "name": "parking-guide-kr",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "전국 공영주차장 안내 - 지역별 공영주차장 이용 정보와 주차 제도 가이드",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "og": "node scripts/make-og.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.1.1"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}

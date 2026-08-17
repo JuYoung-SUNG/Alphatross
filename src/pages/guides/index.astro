@@ -1,0 +1,61 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+
+const categories = [...new Set(guides.map((g) => g.data.category))];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: '공영주차장 이용 가이드',
+  itemListElement: guides.map((g, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: g.data.title,
+    url: new URL(`/guides/${g.id}`, Astro.site).href,
+  })),
+};
+---
+
+<PageLayout
+  title="주차 가이드"
+  heading="공영주차장 이용 가이드"
+  description="공영주차장의 요금 체계, 감면 대상, 정기권 신청, 주정차 위반 기준까지 주차와 관련해 실제로 필요한 내용을 주제별로 정리한 가이드 모음입니다."
+  lead="요금 계산부터 감면 신청, 과태료 기준까지. 주차하면서 한 번쯤 막히는 지점들을 주제별로 정리했습니다."
+  crumbs={[{ label: '주차 가이드' }]}
+  narrow={false}
+  jsonLd={jsonLd}
+>
+  <p>
+    모든 글은 공개된 법령과 지방자치단체 고시, 공공데이터를 바탕으로 작성했으며, 지역마다 다를 수
+    있는 부분은 명확히 구분해 표시했습니다. 총 <strong>{guides.length}편</strong>입니다.
+  </p>
+
+  {categories.map((cat) => (
+    <section class="section">
+      <h2>{cat}</h2>
+      <div class="grid grid-2">
+        {guides
+          .filter((g) => g.data.category === cat)
+          .map((g) => (
+            <a class="card" href={`/guides/${g.id}`}>
+              <span class="card-meta">{g.data.category}</span>
+              <h3>{g.data.title}</h3>
+              <p>{g.data.description}</p>
+            </a>
+          ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="section">
+    <div class="notice">
+      <p style="margin:0">
+        찾는 내용이 지역별 정보라면 <a href="/regions">지역별 안내</a>에서 시·도를 선택해 보세요.
+        각 지역의 요금 체계 구조와 공식 확인처를 안내하고 있습니다.
+      </p>
+    </div>
+  </section>
+</PageLayout>

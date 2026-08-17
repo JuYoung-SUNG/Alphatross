@@ -1,0 +1,62 @@
+---
+import { SITE_NAME, SITE_TAGLINE, FOOTER_POLICY_NAV, MAIN_NAV, CONTACT_EMAIL, LAST_REVIEWED } from '../consts';
+import { REGIONS } from '../data/regions';
+
+const year = new Date().getFullYear();
+const popular = REGIONS.filter((r) =>
+  ['seoul', 'gyeonggi', 'busan', 'incheon', 'jeju', 'daegu'].includes(r.slug),
+);
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <h2>사이트 안내</h2>
+        <p style="margin-bottom:.7rem"><strong>{SITE_NAME}</strong> — {SITE_TAGLINE}</p>
+        <p style="margin-bottom:.7rem">
+          공개된 법령과 지방자치단체 고시, 공공데이터를 바탕으로 전국 공영주차장 이용 정보를
+          정리하는 비영리 정보 안내 사이트입니다. 특정 주차장의 실시간 주차면 수나 결제를
+          대행하지 않습니다.
+        </p>
+        <p class="text-muted" style="margin:0">
+          문의: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        </p>
+      </div>
+
+      <div>
+        <h2>메뉴</h2>
+        <ul>
+          {MAIN_NAV.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2>인기 지역</h2>
+        <ul>
+          {popular.map((r) => (
+            <li><a href={`/regions/${r.slug}`}>{r.name} 공영주차장</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-grid" style="margin-top:2rem">
+      <div class="footer-about">
+        <h2>약관 및 정책</h2>
+        <ul style="display:flex;flex-wrap:wrap;gap:.4rem 1.2rem">
+          {FOOTER_POLICY_NAV.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {year} {SITE_NAME}. All rights reserved.</span>
+      <span>최종 점검일 {LAST_REVIEWED}</span>
+    </div>
+  </div>
+</footer>

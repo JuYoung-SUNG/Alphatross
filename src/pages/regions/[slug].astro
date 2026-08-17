@@ -1,0 +1,180 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { REGIONS } from '../../data/regions';
+import { SOURCES, LAST_REVIEWED } from '../../consts';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  return REGIONS.map((region) => ({
+    params: { slug: region.slug },
+    props: { region },
+  }));
+}
+
+const { region } = Astro.props;
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+const related = guides.slice(0, 4);
+
+const others = REGIONS.filter((r) => r.slug !== region.slug && r.group === region.group).slice(0, 6);
+
+const pageTitle = `${region.name} 공영주차장 안내`;
+const description = `${region.officialName}의 공영주차장 운영 방식과 요금 체계의 특징, 이용 요령, 공식 확인처를 정리했습니다. ${region.summary}`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '홈', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: '지역별 안내', item: new URL('/regions', Astro.site).href },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: pageTitle,
+        item: new URL(`/regions/${region.slug}`, Astro.site).href,
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `${region.name} 공영주차장 요금은 어디서 확인하나요?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `${region.officialName} 공식 홈페이지의 주차 안내와 해당 시·군·구의 주차장 설치 및 관리 조례에서 확인할 수 있습니다. 공공데이터포털의 주차장 표준 데이터에서도 요금과 운영시간을 확인할 수 있습니다.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `${region.name}의 주차요금 체계는 어떤 구조인가요?`,
+        acceptedAnswer: { '@type': 'Answer', text: region.fareStructure },
+      },
+      {
+        '@type': 'Question',
+        name: `${region.name} 공영주차장의 운영 시간은 어떻게 되나요?`,
+        acceptedAnswer: { '@type': 'Answer', text: region.operatingPattern },
+      },
+    ],
+  },
+];
+---
+
+<PageLayout
+  title={pageTitle}
+  description={description}
+  lead={region.summary}
+  crumbs={[{ label: '지역별 안내', href: '/regions' }, { label: region.name }]}
+  updatedAt={LAST_REVIEWED}
+  jsonLd={jsonLd}
+>
+  <p class="meta-line">
+    <span class="badge">{region.group}</span>
+    <span class="badge badge-accent">{region.officialName}</span>
+    <span> · 최종 점검 {LAST_REVIEWED}</span>
+  </p>
+
+  {region.notice && (
+    <div class="notice notice-warn">
+      <p style="margin:0"><strong>안내</strong> — {region.notice}</p>
+    </div>
+  )}
+
+  <h2>{region.name}의 주차 환경 특징</h2>
+  <ul>
+    {region.highlights.map((h) => <li>{h}</li>)}
+  </ul>
+
+  <h2>요금 체계의 구조</h2>
+  <p>{region.fareStructure}</p>
+  <p>
+    요금이 어떻게 계산되는지 자세히 알고 싶다면
+    <a href="/guides/parking-fee-structure">공영주차장 요금 체계 완전 정리</a>를 참고하세요.
+    감면 대상이라면 <a href="/guides/parking-fee-discounts">주차요금 감면 대상 총정리</a>도 함께
+    확인하시기 바랍니다.
+  </p>
+
+  <h2>운영 시간</h2>
+  <p>{region.operatingPattern}</p>
+
+  <h2>{region.name}에서 유용한 이용 요령</h2>
+  <ul>
+    {region.tips.map((t) => <li>{t}</li>)}
+  </ul>
+
+  <h2>정확한 요금을 확인하는 방법</h2>
+  <p>
+    이 페이지는 지역의 <strong>구조적 특징</strong>을 설명합니다. 구체적인 금액은 조례 개정으로
+    수시로 바뀌므로, 실제 이용 전에는 아래 창구에서 확인하시기 바랍니다.
+  </p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">확인처</th>
+          <th scope="col">확인할 수 있는 내용</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <a href={region.officialUrl} rel="noopener noreferrer" target="_blank">
+              {region.officialName} 공식 홈페이지
+            </a>
+          </td>
+          <td>주차 담당 부서 안내, 요금 고시, 정기권·감면 공고</td>
+        </tr>
+        <tr>
+          <td>
+            <a href={SOURCES.lawCenter} rel="noopener noreferrer" target="_blank">국가법령정보센터</a>
+          </td>
+          <td>「○○시 주차장 설치 및 관리 조례」 원문의 요금표·감면 조항</td>
+        </tr>
+        <tr>
+          <td>
+            <a href={SOURCES.dataPortal} rel="noopener noreferrer" target="_blank">공공데이터포털</a>
+          </td>
+          <td>주차장 위치·구획 수·운영시간·요금 표준 데이터</td>
+        </tr>
+        <tr>
+          <td>해당 주차장 관리사무소</td>
+          <td>현재 적용 요금, 감면 적용 여부, 정기권 잔여 여부</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="notice notice-warn">
+    <p style="margin:0">
+      <strong>주의</strong> — 지도 앱이나 커뮤니티에 표시된 요금은 갱신 시점이 불분명할 수 있습니다.
+      금액이 중요한 판단 근거라면 위 공식 창구를 기준으로 확인하세요. 현장 요금 고시판과 온라인
+      정보가 다르면 <strong>고시판이 우선</strong>합니다.
+    </p>
+  </div>
+
+  <h2>함께 읽어 보면 좋은 가이드</h2>
+  <div class="grid grid-2">
+    {related.map((g) => (
+      <a class="card" href={`/guides/${g.id}`}>
+        <span class="card-meta">{g.data.category}</span>
+        <h3>{g.data.title}</h3>
+        <p>{g.data.description}</p>
+      </a>
+    ))}
+  </div>
+
+  {others.length > 0 && (
+    <>
+      <h2>같은 구분의 다른 지역</h2>
+      <ul>
+        {others.map((r) => (
+          <li><a href={`/regions/${r.slug}`}>{r.name} 공영주차장 안내</a></li>
+        ))}
+      </ul>
+      <p><a href="/regions">전체 지역 목록 보기 →</a></p>
+    </>
+  )}
+</PageLayout>

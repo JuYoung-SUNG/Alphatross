@@ -1,0 +1,75 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { REGIONS, regionsByGroup } from '../../data/regions';
+
+const groups = regionsByGroup();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '홈', item: new URL('/', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: '지역별 안내', item: new URL('/regions', Astro.site).href },
+  ],
+};
+---
+
+<PageLayout
+  title="지역별 공영주차장 안내"
+  description="전국 17개 시·도의 공영주차장 운영 방식과 요금 체계의 특징을 지역별로 정리했습니다. 지역을 선택해 해당 시·도의 주차 환경과 공식 확인처를 확인하세요."
+  lead="시·도를 선택하면 해당 지역의 주차 환경 특징, 요금 체계의 구조, 이용 요령, 그리고 요금을 확인할 수 있는 공식 창구를 볼 수 있습니다."
+  crumbs={[{ label: '지역별 안내' }]}
+  narrow={false}
+  jsonLd={jsonLd}
+>
+  <div class="notice">
+    <p>
+      <strong>지역마다 기준이 다른 이유</strong>
+    </p>
+    <p style="margin:0">
+      주차요금과 감면 대상은 전국 단일 기준이 아니라 <strong>각 지방자치단체의 조례</strong>로 정해집니다.
+      같은 도(道) 안에서도 시·군마다 다르고, 광역시 안에서도 자치구마다 다를 수 있습니다.
+      아래 지역 페이지는 각 시·도의 <strong>구조적 특징</strong>을 설명하고, 정확한 금액을 확인할 수 있는
+      공식 홈페이지를 함께 안내합니다.
+    </p>
+  </div>
+
+  {groups.map((g) => (
+    <section class="section">
+      <h2>{g.group}</h2>
+      <div class="grid grid-2">
+        {g.regions.map((r) => (
+          <a class="card" href={`/regions/${r.slug}`}>
+            <span class="card-meta">{r.officialName}</span>
+            <h3>{r.name} 공영주차장</h3>
+            <p>{r.summary}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="section">
+    <h2>전체 지역 목록</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">지역</th>
+            <th scope="col">행정 명칭</th>
+            <th scope="col">구분</th>
+          </tr>
+        </thead>
+        <tbody>
+          {REGIONS.map((r) => (
+            <tr>
+              <td><a href={`/regions/${r.slug}`}>{r.name}</a></td>
+              <td>{r.officialName}</td>
+              <td>{r.group}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</PageLayout>

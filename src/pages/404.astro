@@ -1,0 +1,39 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { REGIONS } from '../data/regions';
+
+const quick = REGIONS.slice(0, 8);
+---
+
+<PageLayout
+  title="페이지를 찾을 수 없습니다"
+  heading="404 — 페이지를 찾을 수 없습니다"
+  description="요청하신 페이지를 찾을 수 없습니다. 지역별 안내나 주차 가이드에서 원하는 정보를 찾아보세요."
+  lead="주소가 변경되었거나 삭제된 페이지일 수 있습니다. 아래에서 원하는 정보를 찾아보세요."
+  noindex={true}
+>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="/">홈으로</a>
+    <a class="btn btn-ghost" href="/regions">지역별 안내</a>
+    <a class="btn btn-ghost" href="/guides">주차 가이드</a>
+  </div>
+
+  <h2>자주 찾는 지역</h2>
+  <ul>
+    {quick.map((r) => (
+      <li><a href={`/regions/${r.slug}`}>{r.name} 공영주차장 안내</a></li>
+    ))}
+  </ul>
+
+  <h2>자주 찾는 가이드</h2>
+  <ul>
+    <li><a href="/guides/parking-fee-structure">공영주차장 요금 체계 완전 정리</a></li>
+    <li><a href="/guides/parking-fee-discounts">주차요금 감면 대상 총정리</a></li>
+    <li><a href="/guides/monthly-parking-pass">정기주차권(월주차) 신청 가이드</a></li>
+    <li><a href="/guides/illegal-parking-penalty">주정차 위반 과태료와 견인</a></li>
+  </ul>
+
+  <p>
+    찾으시는 내용이 없다면 <a href="/contact">문의 페이지</a>를 통해 알려 주세요.
+  </p>
+</PageLayout>
