@@ -25,6 +25,42 @@ keywords: [공영주차장, 노상주차장, 노외주차장, 부설주차장, �
 
 주차장법은 주차장을 세 가지로 구분합니다. 이 구분은 공영이든 민영이든 똑같이 적용됩니다.
 
+<figure class="figure">
+<svg viewBox="0 0 720 260" role="img" aria-label="노상주차장은 도로변에, 노외주차장은 도로 밖 별도 부지에, 부설주차장은 건물에 딸려 설치된다는 것을 보여 주는 도식">
+  <rect width="720" height="260" fill="var(--bg-elev)"/>
+  <rect y="150" width="720" height="60" fill="var(--bg-soft)"/>
+  <path d="M0 180h720" stroke="var(--border-strong)" stroke-width="2" stroke-dasharray="16 12"/>
+  <text x="16" y="232" font-size="14" fill="var(--text-muted)" font-family="sans-serif">도로</text>
+
+  <g>
+    <rect x="40" y="112" width="150" height="34" rx="5" fill="none" stroke="var(--brand)" stroke-width="2.5"/>
+    <path d="M78 112v34M116 112v34M154 112v34" stroke="var(--brand)" stroke-width="2"/>
+    <text x="115" y="100" text-anchor="middle" font-size="17" font-weight="700" fill="var(--text)" font-family="sans-serif">노상주차장</text>
+    <text x="115" y="58" text-anchor="middle" font-size="13" fill="var(--text-soft)" font-family="sans-serif">도로 노면에 구획</text>
+    <text x="115" y="78" text-anchor="middle" font-size="13" fill="var(--text-soft)" font-family="sans-serif">단시간 회전 중심</text>
+  </g>
+
+  <g>
+    <rect x="270" y="60" width="170" height="86" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2.5"/>
+    <path d="M312 60v86M355 60v86M398 60v86" stroke="var(--brand)" stroke-width="1.6" opacity=".55"/>
+    <text x="355" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="var(--text)" font-family="sans-serif">노외주차장</text>
+    <text x="355" y="170" text-anchor="middle" font-size="13" fill="var(--text-soft)" font-family="sans-serif">도로 밖 별도 부지 · 장시간 유리</text>
+  </g>
+
+  <g>
+    <rect x="530" y="34" width="150" height="112" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2.5"/>
+    <path d="M530 106h150" stroke="var(--accent)" stroke-width="2"/>
+    <rect x="548" y="52" width="26" height="22" rx="3" fill="var(--accent)" opacity=".45"/>
+    <rect x="588" y="52" width="26" height="22" rx="3" fill="var(--accent)" opacity=".45"/>
+    <rect x="628" y="52" width="26" height="22" rx="3" fill="var(--accent)" opacity=".45"/>
+    <text x="605" y="130" text-anchor="middle" font-size="13" fill="var(--text-soft)" font-family="sans-serif">건물 이용자용</text>
+    <text x="605" y="22" text-anchor="middle" font-size="17" font-weight="700" fill="var(--text)" font-family="sans-serif">부설주차장</text>
+    <text x="605" y="170" text-anchor="middle" font-size="13" fill="var(--text-soft)" font-family="sans-serif">개방 사업 시 일반 이용 가능</text>
+  </g>
+</svg>
+<figcaption>설치 위치에 따른 세 가지 구분. 이 구분은 공영·민영과는 별개의 기준입니다.</figcaption>
+</figure>
+
 ### 노상주차장(路上駐車場)
 
 도로의 노면이나 교통광장의 일부에 설치한 주차장입니다. 차도 가장자리에 흰 선으로 구획을 그어 놓은 곳을 떠올리면 됩니다.

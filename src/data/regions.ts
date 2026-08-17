@@ -465,6 +465,39 @@ export const REGIONS: Region[] = [
   },
 ];
 
+/**
+ * 지역별 일러스트 장면. RegionArt 컴포넌트의 Scene 타입과 값이 일치해야 합니다.
+ * 각 지역의 대표적인 주차 수요 성격(도심/해안/산악/계획도시 등)을 고릅니다.
+ */
+export type RegionScene =
+  | 'metro' | 'coast' | 'port' | 'planned' | 'industry'
+  | 'transit' | 'mountain' | 'rural' | 'heritage' | 'island';
+
+const SCENE: Record<string, RegionScene> = {
+  seoul: 'metro',
+  busan: 'coast',
+  daegu: 'metro',
+  incheon: 'port',
+  gwangju: 'metro',
+  daejeon: 'planned',
+  ulsan: 'industry',
+  sejong: 'planned',
+  gyeonggi: 'transit',
+  gangwon: 'mountain',
+  chungbuk: 'rural',
+  chungnam: 'coast',
+  jeonbuk: 'heritage',
+  jeonnam: 'island',
+  gyeongbuk: 'heritage',
+  gyeongnam: 'industry',
+  jeju: 'island',
+};
+
+/** 지역 slug 에 해당하는 일러스트 장면 */
+export function sceneOf(slug: string): RegionScene {
+  return SCENE[slug] ?? 'metro';
+}
+
 /** slug 로 지역 찾기 */
 export function getRegion(slug: string): Region | undefined {
   return REGIONS.find((r) => r.slug === slug);

@@ -151,6 +151,105 @@ a.card:hover { transform: translateY(-2px); border-color: var(--brand); }
 .card p { margin: 0; font-size: .93rem; color: var(--text-soft); line-height: 1.65; }
 .card-meta { font-size: .8rem; color: var(--text-muted); font-weight: 600; letter-spacing: .02em; }
 
+/* ── 일러스트가 들어간 카드 ────────────────────────────── */
+.card-media {
+  /* 카드 상단 이미지 영역 — 카드 패딩을 상쇄해 가장자리까지 채웁니다 */
+  margin: -1.15rem -1.25rem .35rem;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--bg-soft);
+}
+.card-media > svg { border-radius: var(--radius) var(--radius) 0 0; }
+
+/* 상세 페이지 상단 대표 일러스트 */
+.page-hero {
+  aspect-ratio: 2.6 / 1;
+  overflow: hidden;
+  border-radius: var(--radius);
+  margin: 0 0 1.8rem;
+  box-shadow: var(--shadow);
+  background: var(--bg-soft);
+}
+@media (max-width: 620px) { .page-hero { aspect-ratio: 2 / 1; } }
+
+/* 본문 안 도식 */
+.figure {
+  margin: 2rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-elev);
+}
+.figure svg { display: block; width: 100%; height: auto; }
+.figure figcaption {
+  padding: .75rem 1.1rem;
+  font-size: .87rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+/* 숫자 강조 밴드 */
+.stats {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  margin: 2rem 0 0;
+  padding: 1.6rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--brand-soft), var(--accent-soft));
+}
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.15;
+  color: var(--brand-strong);
+}
+.stat-label { font-size: .88rem; color: var(--text-soft); }
+
+/* 3단계 안내 */
+.steps { counter-reset: step; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.step {
+  position: relative;
+  padding: 1.4rem 1.3rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  box-shadow: var(--shadow);
+}
+.step::before {
+  counter-increment: step;
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  margin-bottom: .7rem;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+}
+.step h3 { margin: 0 0 .35rem; font-size: 1.02rem; }
+.step p { margin: 0; font-size: .93rem; color: var(--text-soft); }
+
+/* 아이콘이 있는 특징 카드 */
+.icon-card { align-items: flex-start; }
+.icon-badge {
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  margin-bottom: .3rem;
+  border-radius: 12px;
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+.icon-badge svg { width: 24px; height: 24px; }
+
 /* ── 배지 / 알림 박스 ──────────────────────────────────── */
 .badge {
   display: inline-block; font-size: .76rem; font-weight: 700; padding: .18rem .55rem;

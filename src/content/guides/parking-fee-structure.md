@@ -39,6 +39,32 @@ keywords: [공영주차장 요금, 주차요금 계산, 급지, 일일 상한요
 
 상한요금이 있는지 여부가 장시간 주차의 비용을 좌우합니다. 상한이 없는 노상주차장에 하루 종일 대면 요금이 끝없이 올라갑니다.
 
+<figure class="figure">
+<svg viewBox="0 0 720 250" role="img" aria-label="주차요금은 기본시간 요금에 추가 단위요금이 쌓이다가 일일 상한요금에서 멈춘다는 것을 보여 주는 그래프">
+  <rect width="720" height="250" fill="var(--bg-elev)"/>
+  <path d="M70 40v160h610" stroke="var(--border-strong)" stroke-width="2" fill="none"/>
+  <text x="34" y="46" font-size="13" fill="var(--text-muted)" font-family="sans-serif">요금</text>
+  <text x="660" y="224" font-size="13" fill="var(--text-muted)" font-family="sans-serif">시간</text>
+
+  <rect x="70" y="150" width="90" height="50" fill="var(--brand-soft)"/>
+  <path d="M70 150h90" stroke="var(--brand)" stroke-width="3"/>
+  <text x="115" y="140" text-anchor="middle" font-size="12" fill="var(--text-soft)" font-family="sans-serif">기본시간</text>
+
+  <path d="M160 150 L200 132 L240 114 L280 96 L320 78 L360 70" stroke="var(--brand)" stroke-width="3.5" fill="none" stroke-linejoin="round"/>
+  <path d="M360 70h300" stroke="var(--accent)" stroke-width="3.5" fill="none" stroke-dasharray="0"/>
+  <path d="M70 70h290" stroke="var(--accent)" stroke-width="1.8" stroke-dasharray="7 7" opacity=".7"/>
+  <text x="510" y="60" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)" font-family="sans-serif">일일 상한요금 — 더 이상 오르지 않음</text>
+  <text x="255" y="112" font-size="13" fill="var(--text-soft)" font-family="sans-serif" transform="rotate(-24 255 112)">추가 단위요금 누적</text>
+
+  <g fill="var(--text-muted)" font-size="12" font-family="sans-serif" text-anchor="middle">
+    <text x="160" y="220">30분</text><text x="280" y="220">2시간</text>
+    <text x="360" y="220">상한 도달</text><text x="600" y="220">종일</text>
+  </g>
+  <g fill="var(--brand)"><circle cx="360" cy="70" r="6"/></g>
+</svg>
+<figcaption>기본요금에서 출발해 추가 단위요금이 쌓이다가, 일일 상한요금이 있는 시설은 그 지점에서 멈춥니다. 상한이 없으면 계속 올라갑니다.</figcaption>
+</figure>
+
 ## 2. 실제 계산해 보기
 
 요금표가 다음과 같다고 가정합니다. (실제 금액이 아니라 계산 구조를 보기 위한 예시입니다.)

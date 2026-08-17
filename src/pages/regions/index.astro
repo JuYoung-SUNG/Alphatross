@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import { REGIONS, regionsByGroup } from '../../data/regions';
+import { REGIONS, regionsByGroup, sceneOf } from '../../data/regions';
+import RegionArt from '../../components/art/RegionArt.astro';
 
 const groups = regionsByGroup();
 
@@ -40,6 +41,9 @@ const jsonLd = {
       <div class="grid grid-2">
         {g.regions.map((r) => (
           <a class="card" href={`/regions/${r.slug}`}>
+            <div class="card-media">
+              <RegionArt scene={sceneOf(r.slug)} hue={r.hue} label={r.name} decorative />
+            </div>
             <span class="card-meta">{r.officialName}</span>
             <h3>{r.name} 공영주차장</h3>
             <p>{r.summary}</p>

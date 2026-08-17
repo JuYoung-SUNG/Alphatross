@@ -32,6 +32,43 @@ keywords: [주정차 위반 과태료, 견인, 주민신고제, 어린이보호�
 | 인도 | 보도 위 주차 |
 | 소방활동 장애 구역 | 소방차 진입로 등 |
 
+<figure class="figure">
+<svg viewBox="0 0 720 210" role="img" aria-label="흰색 실선은 주차 가능, 황색 점선은 조건부 허용, 황색 실선은 주정차 금지, 황색 복선은 절대 금지를 뜻한다는 노면 표시 비교 그림">
+  <rect width="720" height="210" fill="var(--bg-elev)"/>
+  <g font-family="sans-serif">
+    <g>
+      <rect x="30" y="40" width="140" height="46" rx="4" fill="var(--bg-soft)"/>
+      <path d="M30 63h140" stroke="#e9edf2" stroke-width="7"/>
+      <path d="M30 63h140" stroke="var(--border-strong)" stroke-width="1"/>
+      <text x="100" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="var(--text)">흰색 실선</text>
+      <text x="100" y="140" text-anchor="middle" font-size="13" fill="var(--text-soft)">주차 가능</text>
+    </g>
+    <g>
+      <rect x="200" y="40" width="140" height="46" rx="4" fill="var(--bg-soft)"/>
+      <path d="M200 63h140" stroke="#e8b53a" stroke-width="7" stroke-dasharray="20 14"/>
+      <text x="270" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="var(--text)">황색 점선</text>
+      <text x="270" y="140" text-anchor="middle" font-size="13" fill="var(--text-soft)">조건부 허용</text>
+      <text x="270" y="160" text-anchor="middle" font-size="12" fill="var(--text-muted)">표지판 확인 필요</text>
+    </g>
+    <g>
+      <rect x="370" y="40" width="140" height="46" rx="4" fill="var(--bg-soft)"/>
+      <path d="M370 63h140" stroke="#e08a1e" stroke-width="7"/>
+      <text x="440" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="var(--text)">황색 실선</text>
+      <text x="440" y="140" text-anchor="middle" font-size="13" fill="var(--text-soft)">주정차 금지</text>
+      <text x="440" y="160" text-anchor="middle" font-size="12" fill="var(--text-muted)">시간대 제한 가능</text>
+    </g>
+    <g>
+      <rect x="540" y="40" width="150" height="46" rx="4" fill="var(--bg-soft)"/>
+      <path d="M540 57h150M540 71h150" stroke="#d0521b" stroke-width="6"/>
+      <text x="615" y="116" text-anchor="middle" font-size="15" font-weight="700" fill="var(--text)">황색 복선</text>
+      <text x="615" y="140" text-anchor="middle" font-size="13" fill="var(--text-soft)">절대 주정차 금지</text>
+      <text x="615" y="160" text-anchor="middle" font-size="12" fill="var(--text-muted)">단속·신고 집중 구간</text>
+    </g>
+  </g>
+</svg>
+<figcaption>노면 색과 선 모양만 봐도 대부분 판단할 수 있습니다. 실제 적용은 함께 설치된 표지판이 우선합니다.</figcaption>
+</figure>
+
 이 구역들은 **주민신고제** 대상인 경우가 많습니다. 단속 공무원이 없어도 일반 시민이 앱으로 사진을 찍어 신고하면 계도 없이 과태료가 부과됩니다. "잠깐이니까 괜찮겠지"가 통하지 않는 이유입니다.
 
 ## 3. 과태료 수준

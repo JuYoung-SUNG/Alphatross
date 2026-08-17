@@ -50,6 +50,46 @@ keywords: [환승주차장, P&R, 환승 주차 할인, 도심 주차비 절약, 
 
 **다만 인원이 많으면 계산이 달라집니다.** 4인 가족이라면 대중교통 왕복 요금이 커지므로, 도심 주차가 유리해지는 지점이 생깁니다. 인원과 체류 시간을 함께 보고 판단하세요.
 
+<figure class="figure">
+<svg viewBox="0 0 720 200" role="img" aria-label="외곽 환승주차장에 주차한 뒤 대중교통으로 갈아타고 도심에 도착하는 흐름도">
+  <rect width="720" height="200" fill="var(--bg-elev)"/>
+  <g font-family="sans-serif">
+    <g>
+      <rect x="24" y="46" width="150" height="90" rx="12" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="2"/>
+      <text x="99" y="84" text-anchor="middle" font-size="30" font-weight="800" fill="var(--brand-strong)">P</text>
+      <text x="99" y="112" text-anchor="middle" font-size="13" fill="var(--text-soft)">외곽 환승주차장</text>
+      <text x="99" y="160" text-anchor="middle" font-size="12" fill="var(--text-muted)">요금 낮음 · 자리 여유</text>
+    </g>
+
+    <path d="M186 91h72" stroke="var(--border-strong)" stroke-width="2.5" marker-end="url(#arw)"/>
+    <defs>
+      <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+        <path d="M0 0l9 4.5L0 9z" fill="var(--border-strong)"/>
+      </marker>
+    </defs>
+
+    <g>
+      <rect x="270" y="46" width="150" height="90" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+      <rect x="303" y="64" width="84" height="40" rx="7" fill="var(--accent)" opacity=".35"/>
+      <circle cx="320" cy="112" r="7" fill="var(--accent)"/><circle cx="370" cy="112" r="7" fill="var(--accent)"/>
+      <text x="345" y="160" text-anchor="middle" font-size="12" fill="var(--text-muted)">교통카드로 탑승</text>
+    </g>
+
+    <path d="M432 91h72" stroke="var(--border-strong)" stroke-width="2.5" marker-end="url(#arw)"/>
+
+    <g>
+      <rect x="516" y="34" width="46" height="102" rx="4" fill="var(--bg-soft)" stroke="var(--border-strong)" stroke-width="2"/>
+      <rect x="570" y="56" width="46" height="80" rx="4" fill="var(--bg-soft)" stroke="var(--border-strong)" stroke-width="2"/>
+      <rect x="624" y="70" width="46" height="66" rx="4" fill="var(--bg-soft)" stroke="var(--border-strong)" stroke-width="2"/>
+      <text x="593" y="160" text-anchor="middle" font-size="12" fill="var(--text-muted)">도심 목적지 도착</text>
+    </g>
+
+    <text x="345" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">환승 실적이 확인되면 주차요금 할인</text>
+  </g>
+</svg>
+<figcaption>정산할 때 주차 중 사용한 교통카드를 그대로 제시해야 환승 실적이 인식됩니다.</figcaption>
+</figure>
+
 ## 3. 이용 절차
 
 1. **목적지 방향의 환승주차장을 찾습니다.** 보통 지하철 종점 부근이나 광역버스 정류장 인근에 있습니다.

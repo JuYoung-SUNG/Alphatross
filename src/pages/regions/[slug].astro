@@ -1,8 +1,11 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
-import { REGIONS } from '../../data/regions';
+import { REGIONS, sceneOf } from '../../data/regions';
 import { SOURCES, LAST_REVIEWED } from '../../consts';
 import { getCollection } from 'astro:content';
+import RegionArt from '../../components/art/RegionArt.astro';
+import GuideArt from '../../components/art/GuideArt.astro';
+import { artOf } from '../../data/guide-art';
 
 export async function getStaticPaths() {
   return REGIONS.map((region) => ({
@@ -71,6 +74,10 @@ const jsonLd = [
   updatedAt={LAST_REVIEWED}
   jsonLd={jsonLd}
 >
+  <div class="page-hero">
+    <RegionArt scene={sceneOf(region.slug)} hue={region.hue} label={region.name} />
+  </div>
+
   <p class="meta-line">
     <span class="badge">{region.group}</span>
     <span class="badge badge-accent">{region.officialName}</span>
@@ -159,6 +166,9 @@ const jsonLd = [
   <div class="grid grid-2">
     {related.map((g) => (
       <a class="card" href={`/guides/${g.id}`}>
+        <div class="card-media">
+          <GuideArt art={artOf(g.id)} label={g.data.title} decorative />
+        </div>
         <span class="card-meta">{g.data.category}</span>
         <h3>{g.data.title}</h3>
         <p>{g.data.description}</p>
@@ -169,11 +179,17 @@ const jsonLd = [
   {others.length > 0 && (
     <>
       <h2>같은 구분의 다른 지역</h2>
-      <ul>
+      <div class="grid grid-3">
         {others.map((r) => (
-          <li><a href={`/regions/${r.slug}`}>{r.name} 공영주차장 안내</a></li>
+          <a class="card" href={`/regions/${r.slug}`}>
+            <div class="card-media">
+              <RegionArt scene={sceneOf(r.slug)} hue={r.hue} label={r.name} decorative />
+            </div>
+            <h3>{r.name}</h3>
+            <p>{r.officialName}</p>
+          </a>
         ))}
-      </ul>
+      </div>
       <p><a href="/regions">전체 지역 목록 보기 →</a></p>
     </>
   )}

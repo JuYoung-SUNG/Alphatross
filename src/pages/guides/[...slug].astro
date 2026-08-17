@@ -3,6 +3,8 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { PUBLISHER } from '../../consts';
+import GuideArt from '../../components/art/GuideArt.astro';
+import { artOf } from '../../data/guide-art';
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides');
@@ -66,6 +68,10 @@ const jsonLd = [
     {entry.data.updatedAt && <span> · 수정 {entry.data.updatedAt}</span>}
   </p>
 
+  <div class="page-hero">
+    <GuideArt art={artOf(entry.id)} label={entry.data.title} />
+  </div>
+
   <article class="prose">
     <Content />
   </article>
@@ -76,6 +82,9 @@ const jsonLd = [
       <div class="grid grid-2">
         {related.map((g) => (
           <a class="card" href={`/guides/${g.id}`}>
+            <div class="card-media">
+              <GuideArt art={artOf(g.id)} label={g.data.title} decorative />
+            </div>
             <span class="card-meta">{g.data.category}</span>
             <h3>{g.data.title}</h3>
             <p>{g.data.description}</p>

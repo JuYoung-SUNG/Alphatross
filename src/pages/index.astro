@@ -1,14 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroArt from '../components/HeroArt.astro';
-import { REGIONS } from '../data/regions';
+import RegionArt from '../components/art/RegionArt.astro';
+import GuideArt from '../components/art/GuideArt.astro';
+import Icon from '../components/art/Icon.astro';
+import { REGIONS, sceneOf } from '../data/regions';
+import { artOf } from '../data/guide-art';
 import { SITE_NAME, SITE_DESCRIPTION, SOURCES } from '../consts';
 import { getCollection } from 'astro:content';
 
-const guides = (await getCollection('guides')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
 const featured = guides.slice(0, 6);
+
+const features = [
+  { icon: 'coin', tag: '요금', title: '주차요금이 왜 다른지', body: '급지·기본요금·추가 단위·일일 상한이 어떻게 맞물려 최종 금액이 되는지 계산 예시로 설명합니다.', href: '/guides/parking-fee-structure' },
+  { icon: 'discount', tag: '감면', title: '내가 감면 대상인지', body: '장애인·국가유공자·경차·저공해차·다자녀 등 감면 대상과 필요한 증빙을 정리했습니다.', href: '/guides/parking-fee-discounts' },
+  { icon: 'form', tag: '절차', title: '정기권·거주자주차 신청', body: '모집 공고 확인부터 배점, 대기 순번 관리, 갱신·해지까지 실제 순서대로 안내합니다.', href: '/guides/monthly-parking-pass' },
+  { icon: 'alert', tag: '법규', title: '과태료를 피하는 기준', body: '절대 주정차 금지구역, 장애인전용구역, 전기차 충전구역의 규정을 구분해 설명합니다.', href: '/guides/illegal-parking-penalty' },
+  { icon: 'search', tag: '탐색', title: '정확한 정보를 찾는 법', body: '공공데이터포털과 자치법규에서 요금·운영시간을 직접 확인하는 방법을 안내합니다.', href: '/guides/find-parking-open-data' },
+  { icon: 'transit', tag: '절약', title: '도심 주차비 줄이기', body: '환승주차장과 부설주차장 개방 사업을 활용해 비용을 낮추는 구체적인 방법을 다룹니다.', href: '/guides/transfer-parking' },
+] as const;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -27,7 +38,7 @@ const jsonLd = {
   <div class="wrap">
     <section class="hero">
       <div class="hero-text">
-        <p class="badge">전국 17개 시·도 · 12편의 주차 가이드</p>
+        <p class="badge">전국 17개 시·도 · {guides.length}편의 주차 가이드</p>
         <h1>전국 공영주차장,<br />제도부터 요금까지 한곳에</h1>
         <p class="page-lead">
           공영주차장은 지역마다 요금 체계와 감면 기준이 다릅니다. 이 사이트는 공개된 법령과
@@ -44,38 +55,57 @@ const jsonLd = {
       </div>
     </section>
 
+    <section class="stats" aria-label="사이트 요약">
+      <div>
+        <span class="stat-value">17</span>
+        <span class="stat-label">개 시·도 지역별 안내</span>
+      </div>
+      <div>
+        <span class="stat-value">{guides.length}</span>
+        <span class="stat-label">편의 주제별 가이드</span>
+      </div>
+      <div>
+        <span class="stat-value">3</span>
+        <span class="stat-label">가지 공식 확인 창구 안내</span>
+      </div>
+      <div>
+        <span class="stat-value">0원</span>
+        <span class="stat-label">가입 없이 무료로 열람</span>
+      </div>
+    </section>
+
     <section class="section">
       <h2>이 사이트로 해결할 수 있는 것</h2>
       <div class="grid grid-3">
-        <div class="card">
-          <span class="card-meta">요금</span>
-          <h3>주차요금이 왜 다른지</h3>
-          <p>급지·기본요금·추가 단위·일일 상한이 어떻게 맞물려 최종 금액이 되는지 계산 예시로 설명합니다.</p>
+        {features.map((f) => (
+          <a class="card icon-card" href={f.href}>
+            <span class="icon-badge"><Icon name={f.icon} /></span>
+            <span class="card-meta">{f.tag}</span>
+            <h3>{f.title}</h3>
+            <p>{f.body}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>주차장을 고르는 순서</h2>
+      <p>
+        머무는 시간에 따라 유리한 주차장이 달라집니다. 아래 순서대로 판단하면 대부분의 경우
+        불필요한 요금을 피할 수 있습니다.
+      </p>
+      <div class="steps">
+        <div class="step">
+          <h3>목적지 부설주차장 확인</h3>
+          <p>방문하는 건물에 무료 시간이나 할인 조건이 있는지 먼저 확인합니다. 가장 저렴한 선택인 경우가 많습니다.</p>
         </div>
-        <div class="card">
-          <span class="card-meta">감면</span>
-          <h3>내가 감면 대상인지</h3>
-          <p>장애인·국가유공자·경차·저공해차·다자녀 등 감면 대상과 필요한 증빙을 정리했습니다.</p>
+        <div class="step">
+          <h3>머무는 시간 판단</h3>
+          <p>1시간 이내면 가까운 노상주차장, 3시간 이상이면 일일 상한요금이 있는 노외주차장이 유리합니다.</p>
         </div>
-        <div class="card">
-          <span class="card-meta">절차</span>
-          <h3>정기권·거주자주차 신청</h3>
-          <p>모집 공고 확인부터 배점, 대기 순번 관리, 갱신·해지까지 실제 순서대로 안내합니다.</p>
-        </div>
-        <div class="card">
-          <span class="card-meta">법규</span>
-          <h3>과태료를 피하는 기준</h3>
-          <p>절대 주정차 금지구역, 장애인전용구역, 전기차 충전구역의 규정을 구분해 설명합니다.</p>
-        </div>
-        <div class="card">
-          <span class="card-meta">탐색</span>
-          <h3>정확한 정보를 찾는 법</h3>
-          <p>공공데이터포털과 자치법규에서 요금·운영시간을 직접 확인하는 방법을 안내합니다.</p>
-        </div>
-        <div class="card">
-          <span class="card-meta">절약</span>
-          <h3>도심 주차비 줄이기</h3>
-          <p>환승주차장과 부설주차장 개방 사업을 활용해 비용을 낮추는 구체적인 방법을 다룹니다.</p>
+        <div class="step">
+          <h3>감면·정기권 확인</h3>
+          <p>경차·저공해차·장애인 등 감면 대상인지, 반복 이용이라면 정기권이 유리한지 계산해 봅니다.</p>
         </div>
       </div>
     </section>
@@ -86,16 +116,17 @@ const jsonLd = {
         시·도를 선택하면 해당 지역의 주차 환경 특징, 요금 체계의 구조, 이용 요령과 공식 확인처를
         볼 수 있습니다.
       </p>
-      <ul class="region-list">
+      <div class="grid grid-3 region-grid">
         {REGIONS.map((r) => (
-          <li>
-            <a href={`/regions/${r.slug}`} style={`--h:${r.hue}`}>
-              <span class="region-name">{r.name}</span>
-              <span class="region-sub">공영주차장</span>
-            </a>
-          </li>
+          <a class="card" href={`/regions/${r.slug}`}>
+            <div class="card-media">
+              <RegionArt scene={sceneOf(r.slug)} hue={r.hue} label={r.name} decorative />
+            </div>
+            <h3>{r.name} 공영주차장</h3>
+            <p class="card-meta">{r.officialName}</p>
+          </a>
         ))}
-      </ul>
+      </div>
     </section>
 
     <section class="section">
@@ -103,6 +134,9 @@ const jsonLd = {
       <div class="grid grid-2">
         {featured.map((g) => (
           <a class="card" href={`/guides/${g.id}`}>
+            <div class="card-media">
+              <GuideArt art={artOf(g.id)} label={g.data.title} decorative />
+            </div>
             <span class="card-meta">{g.data.category}</span>
             <h3>{g.data.title}</h3>
             <p>{g.data.description}</p>
@@ -116,9 +150,7 @@ const jsonLd = {
 
     <section class="section">
       <div class="notice">
-        <p>
-          <strong>정보의 출처와 한계</strong>
-        </p>
+        <p><strong>정보의 출처와 한계</strong></p>
         <p>
           이 사이트는 <a href={SOURCES.lawCenter} rel="noopener noreferrer" target="_blank">국가법령정보센터</a>의
           법령·자치법규와 <a href={SOURCES.dataPortal} rel="noopener noreferrer" target="_blank">공공데이터포털</a>의
@@ -150,29 +182,7 @@ const jsonLd = {
     .hero-media { order: -1; }
   }
 
-  .region-list {
-    list-style: none;
-    margin: 1.5rem 0 0;
-    padding: 0;
-    display: grid;
-    gap: .7rem;
-    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-  }
-  .region-list a {
-    display: flex;
-    flex-direction: column;
-    gap: .1rem;
-    padding: .9rem 1rem;
-    border-radius: 12px;
-    text-decoration: none;
-    border: 1px solid var(--border);
-    background: color-mix(in srgb, hsl(var(--h) 70% 50%) 7%, var(--bg-elev));
-    transition: transform .15s ease, border-color .15s ease;
-  }
-  .region-list a:hover {
-    transform: translateY(-2px);
-    border-color: hsl(var(--h) 65% 50%);
-  }
-  .region-name { font-weight: 800; font-size: 1.05rem; color: var(--text); letter-spacing: -.02em; }
-  .region-sub { font-size: .8rem; color: var(--text-muted); }
+  .region-grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+  .region-grid h3 { font-size: 1rem; }
+  .region-grid .card-meta { margin: 0; }
 </style>

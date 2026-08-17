@@ -1,6 +1,8 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import { getCollection } from 'astro:content';
+import GuideArt from '../../components/art/GuideArt.astro';
+import { artOf } from '../../data/guide-art';
 
 const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
 
@@ -41,6 +43,9 @@ const jsonLd = {
           .filter((g) => g.data.category === cat)
           .map((g) => (
             <a class="card" href={`/guides/${g.id}`}>
+              <div class="card-media">
+                <GuideArt art={artOf(g.id)} label={g.data.title} decorative />
+              </div>
               <span class="card-meta">{g.data.category}</span>
               <h3>{g.data.title}</h3>
               <p>{g.data.description}</p>

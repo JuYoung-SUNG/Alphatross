@@ -1,0 +1,289 @@
+---
+/**
+ * 가이드 글 상단·카드 썸네일용 일러스트.
+ * 글 주제를 한눈에 보여 주는 도식형 그림입니다. 전부 인라인 SVG입니다.
+ */
+import type { GuideArtKey } from '../../data/guide-art';
+
+export interface Props {
+  art: GuideArtKey;
+  label: string;
+  decorative?: boolean;
+}
+const { art, label, decorative = false } = Astro.props;
+
+const HUE: Record<GuideArtKey, number> = {
+  types: 212, calc: 262, discount: 160, resident: 24, data: 196, penalty: 6,
+  accessible: 232, ev: 150, pass: 280, shared: 36, transit: 188, travel: 14,
+};
+const h = HUE[art];
+const uid = `ga-${art}`;
+---
+
+<svg
+  class="guide-art"
+  viewBox="0 0 400 200"
+  preserveAspectRatio="xMidYMid slice"
+  role={decorative ? 'presentation' : 'img'}
+  aria-hidden={decorative ? 'true' : undefined}
+  aria-label={decorative ? undefined : `${label} 관련 일러스트`}
+>
+  <defs>
+    <linearGradient id={`${uid}-bg`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color={`hsl(${h} 60% 56%)`} />
+      <stop offset="100%" stop-color={`hsl(${h + 26} 56% 40%)`} />
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="200" fill={`url(#${uid}-bg)`} />
+  <circle cx="352" cy="30" r="76" fill="#fff" opacity=".09" />
+  <circle cx="40" cy="182" r="60" fill="#fff" opacity=".07" />
+
+  {art === 'types' && (
+    <g>
+      <g fill="#fff" opacity=".92">
+        <rect x="40" y="112" width="90" height="52" rx="8" />
+        <rect x="155" y="88" width="90" height="76" rx="8" />
+        <rect x="270" y="64" width="90" height="100" rx="8" />
+      </g>
+      <g fill={`hsl(${h} 60% 40%)`} font-family="sans-serif" font-size="24" font-weight="800" text-anchor="middle">
+        <text x="85" y="146">노상</text><text x="200" y="134">노외</text><text x="315" y="122">부설</text>
+      </g>
+      <g stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7">
+        <path d="M138 138h9" /><path d="M253 126h9" />
+      </g>
+    </g>
+  )}
+
+  {art === 'calc' && (
+    <g>
+      <rect x="46" y="34" width="136" height="132" rx="12" fill="#fff" opacity=".94" />
+      <rect x="60" y="48" width="108" height="30" rx="6" fill={`hsl(${h} 55% 88%)`} />
+      <g fill={`hsl(${h} 55% 45%)`}>
+        <rect x="60" y="88" width="30" height="22" rx="5" /><rect x="99" y="88" width="30" height="22" rx="5" />
+        <rect x="138" y="88" width="30" height="22" rx="5" /><rect x="60" y="118" width="30" height="22" rx="5" />
+        <rect x="99" y="118" width="30" height="22" rx="5" /><rect x="138" y="118" width="30" height="22" rx="5" />
+      </g>
+      <g stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".9">
+        <path d="M214 132h130" /><path d="M214 132l26-30 30 22 34-52 32 22" />
+      </g>
+      <circle cx="336" cy="72" r="9" fill="#fff" />
+    </g>
+  )}
+
+  {art === 'discount' && (
+    <g>
+      <path d="M112 44h124a20 20 0 0 1 20 20v72a20 20 0 0 1-20 20H112L58 100z" fill="#fff" opacity=".94" />
+      <circle cx="106" cy="100" r="12" fill={`hsl(${h} 55% 42%)`} />
+      <g stroke={`hsl(${h} 55% 42%)`} stroke-width="9" stroke-linecap="round">
+        <path d="M150 122l58-46" />
+      </g>
+      <circle cx="156" cy="80" r="11" fill="none" stroke={`hsl(${h} 55% 42%)`} stroke-width="7" />
+      <circle cx="202" cy="120" r="11" fill="none" stroke={`hsl(${h} 55% 42%)`} stroke-width="7" />
+      <g fill="#fff" opacity=".85">
+        <path d="M300 66l7 16 18 2-13 13 3 18-15-9-15 9 3-18-13-13 18-2z" />
+        <path d="M330 118l5 11 12 2-9 9 2 12-10-6-10 6 2-12-9-9 12-2z" opacity=".7" />
+      </g>
+    </g>
+  )}
+
+  {art === 'resident' && (
+    <g>
+      <g fill="#fff" opacity=".92">
+        <path d="M44 96l44-34 44 34v66H44z" />
+        <path d="M156 108l38-30 38 30v54h-76z" opacity=".8" />
+      </g>
+      <g fill={`hsl(${h} 55% 42%)`}>
+        <rect x="72" y="118" width="26" height="30" rx="3" />
+        <rect x="180" y="126" width="20" height="24" rx="3" />
+      </g>
+      <g>
+        <rect x="262" y="76" width="100" height="86" rx="10" fill="#fff" opacity=".2" />
+        <g stroke="#fff" stroke-width="4" stroke-dasharray="10 8" fill="none" opacity=".9">
+          <rect x="272" y="86" width="80" height="66" rx="6" />
+        </g>
+        <text x="312" y="130" text-anchor="middle" font-family="sans-serif" font-size="34"
+              font-weight="800" fill="#fff">P</text>
+      </g>
+    </g>
+  )}
+
+  {art === 'data' && (
+    <g>
+      <rect x="46" y="42" width="150" height="116" rx="12" fill="#fff" opacity=".94" />
+      <g fill={`hsl(${h} 55% 45%)`} opacity=".85">
+        <rect x="62" y="58" width="118" height="12" rx="4" />
+        <rect x="62" y="80" width="80" height="9" rx="4" opacity=".6" />
+        <rect x="62" y="98" width="104" height="9" rx="4" opacity=".6" />
+        <rect x="62" y="116" width="68" height="9" rx="4" opacity=".6" />
+        <rect x="62" y="134" width="94" height="9" rx="4" opacity=".6" />
+      </g>
+      <g>
+        <circle cx="288" cy="96" r="42" fill="none" stroke="#fff" stroke-width="9" opacity=".95" />
+        <path d="M318 128l30 30" stroke="#fff" stroke-width="13" stroke-linecap="round" />
+        <path d="M288 74a14 14 0 0 0-14 14c0 10 14 24 14 24s14-14 14-24a14 14 0 0 0-14-14z" fill="#fff" />
+      </g>
+    </g>
+  )}
+
+  {art === 'penalty' && (
+    <g>
+      <rect x="52" y="52" width="130" height="112" rx="10" fill="#fff" opacity=".94" />
+      <g fill={`hsl(${h} 60% 45%)`}>
+        <rect x="68" y="70" width="98" height="13" rx="4" />
+        <rect x="68" y="96" width="62" height="9" rx="4" opacity=".55" />
+        <rect x="68" y="114" width="84" height="9" rx="4" opacity=".55" />
+        <rect x="68" y="136" width="46" height="14" rx="5" />
+      </g>
+      <g transform="translate(232 44)">
+        <path d="M60 0l60 108H0z" fill="#fff" opacity=".95" />
+        <rect x="54" y="38" width="12" height="38" rx="6" fill={`hsl(${h} 65% 45%)`} />
+        <circle cx="60" cy="90" r="7" fill={`hsl(${h} 65% 45%)`} />
+      </g>
+      <g stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".8">
+        <path d="M196 96h22" />
+      </g>
+    </g>
+  )}
+
+  {art === 'accessible' && (
+    <g>
+      <rect x="54" y="40" width="130" height="130" rx="14" fill="#fff" opacity=".2" />
+      <g transform="translate(78 58)" fill="#fff">
+        <circle cx="28" cy="11" r="11" />
+        <path d="M21 29a7 7 0 0 1 14 0v14h20a7 7 0 0 1 0 14H35a14 14 0 0 1-14-14z" />
+        <circle cx="42" cy="74" r="25" fill="none" stroke="#fff" stroke-width="8" />
+        <path d="M57 52l15 30h14" fill="none" stroke="#fff" stroke-width="8"
+              stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <g stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".85">
+        <path d="M232 62v96" stroke-dasharray="12 10" />
+        <path d="M262 62v96" stroke-dasharray="12 10" />
+      </g>
+      <rect x="286" y="72" width="76" height="76" rx="10" fill="#fff" opacity=".92" />
+      <text x="324" y="122" text-anchor="middle" font-family="sans-serif" font-size="42"
+            font-weight="800" fill={`hsl(${h} 55% 45%)`}>P</text>
+    </g>
+  )}
+
+  {art === 'ev' && (
+    <g>
+      <rect x="58" y="46" width="92" height="126" rx="14" fill="#fff" opacity=".94" />
+      <rect x="74" y="62" width="60" height="44" rx="6" fill={`hsl(${h} 50% 88%)`} />
+      <path d="M108 68l-16 26h13l-4 20 18-28h-13z" fill={`hsl(${h} 60% 40%)`} />
+      <g fill={`hsl(${h} 55% 45%)`} opacity=".8">
+        <rect x="82" y="122" width="44" height="10" rx="5" />
+        <rect x="82" y="140" width="30" height="10" rx="5" opacity=".6" />
+      </g>
+      <path d="M150 92h34a16 16 0 0 1 16 16v26" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" />
+      <g transform="translate(206 100)">
+        <path d="M8 26c0-3 1-5 3-7l6-8c2-2 4-3 7-3h30c3 0 5 1 7 3l6 8c2 2 3 4 3 7v9a3 3 0 0 1-3 3h-5a8 8 0 0 1-16 0H32a8 8 0 0 1-16 0h-5a3 3 0 0 1-3-3z"
+              fill="#fff" opacity=".95" />
+        <path d="M25 10h26l6 8H19z" fill={`hsl(${h} 50% 80%)`} />
+        <circle cx="24" cy="38" r="5" fill={`hsl(${h} 55% 30%)`} />
+        <circle cx="54" cy="38" r="5" fill={`hsl(${h} 55% 30%)`} />
+      </g>
+      <g fill="#fff" opacity=".55">
+        <path d="M330 44l-14 24h11l-4 18 16-26h-11z" />
+      </g>
+    </g>
+  )}
+
+  {art === 'pass' && (
+    <g>
+      <rect x="52" y="56" width="180" height="112" rx="14" fill="#fff" opacity=".95" />
+      <rect x="52" y="56" width="180" height="30" rx="14" fill={`hsl(${h} 50% 46%)`} />
+      <rect x="52" y="72" width="180" height="14" fill={`hsl(${h} 50% 46%)`} />
+      <g fill={`hsl(${h} 40% 62%)`} opacity=".7">
+        <rect x="70" y="100" width="20" height="18" rx="4" /><rect x="98" y="100" width="20" height="18" rx="4" />
+        <rect x="126" y="100" width="20" height="18" rx="4" /><rect x="154" y="100" width="20" height="18" rx="4" />
+        <rect x="182" y="100" width="20" height="18" rx="4" />
+        <rect x="70" y="126" width="20" height="18" rx="4" /><rect x="98" y="126" width="20" height="18" rx="4" />
+      </g>
+      <rect x="126" y="126" width="20" height="18" rx="4" fill={`hsl(${h} 60% 45%)`} />
+      <g transform="translate(258 62)">
+        <rect width="96" height="62" rx="9" fill="#fff" opacity=".9" />
+        <rect y="14" width="96" height="14" fill={`hsl(${h} 55% 45%)`} />
+        <rect x="12" y="40" width="34" height="8" rx="4" fill={`hsl(${h} 40% 70%)`} />
+        <text x="76" y="50" text-anchor="middle" font-family="sans-serif" font-size="22"
+              font-weight="800" fill={`hsl(${h} 55% 45%)`}>P</text>
+      </g>
+      <path d="M282 138h52M282 154h32" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".75" />
+    </g>
+  )}
+
+  {art === 'shared' && (
+    <g>
+      <g fill="#fff" opacity=".93">
+        <rect x="44" y="60" width="96" height="102" rx="8" />
+        <rect x="260" y="60" width="96" height="102" rx="8" />
+      </g>
+      <g fill={`hsl(${h} 50% 48%)`} opacity=".65">
+        <rect x="58" y="76" width="20" height="16" rx="3" /><rect x="86" y="76" width="20" height="16" rx="3" />
+        <rect x="114" y="76" width="12" height="16" rx="3" />
+        <rect x="58" y="102" width="20" height="16" rx="3" /><rect x="86" y="102" width="20" height="16" rx="3" />
+        <rect x="274" y="76" width="20" height="16" rx="3" /><rect x="302" y="76" width="20" height="16" rx="3" />
+        <rect x="274" y="102" width="20" height="16" rx="3" /><rect x="302" y="102" width="20" height="16" rx="3" />
+      </g>
+      <g stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".95">
+        <path d="M158 86h84M226 72l18 14-18 14" />
+        <path d="M242 136h-84M174 122l-18 14 18 14" />
+      </g>
+    </g>
+  )}
+
+  {art === 'transit' && (
+    <g>
+      <g transform="translate(38 74)">
+        <path d="M8 42c0-4 1-7 4-10l8-11c3-3 6-5 10-5h40c4 0 7 2 10 5l8 11c3 3 4 6 4 10v12a4 4 0 0 1-4 4h-7a10 10 0 0 1-20 0H39a10 10 0 0 1-20 0h-7a4 4 0 0 1-4-4z"
+              fill="#fff" opacity=".95" />
+        <path d="M32 20h34l8 11H24z" fill={`hsl(${h} 45% 78%)`} />
+        <circle cx="29" cy="58" r="7" fill={`hsl(${h} 50% 28%)`} />
+        <circle cx="69" cy="58" r="7" fill={`hsl(${h} 50% 28%)`} />
+      </g>
+      <g stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".9">
+        <path d="M158 108h56" stroke-dasharray="4 12" />
+      </g>
+      <g transform="translate(228 56)">
+        <rect width="118" height="82" rx="12" fill="#fff" opacity=".95" />
+        <rect x="12" y="14" width="42" height="30" rx="5" fill={`hsl(${h} 50% 46%)`} />
+        <rect x="64" y="14" width="42" height="30" rx="5" fill={`hsl(${h} 50% 46%)`} />
+        <rect x="12" y="54" width="94" height="10" rx="5" fill={`hsl(${h} 30% 78%)`} />
+        <circle cx="30" cy="86" r="10" fill="#fff" /><circle cx="88" cy="86" r="10" fill="#fff" />
+      </g>
+      <text x="200" y="176" text-anchor="middle" font-family="sans-serif" font-size="22"
+            font-weight="800" fill="#fff" opacity=".75">P &amp; R</text>
+    </g>
+  )}
+
+  {art === 'travel' && (
+    <g>
+      <path d="M0 150q60-40 130-8t150-24 120 14v68H0z" fill="#fff" opacity=".16" />
+      <g transform="translate(48 62)">
+        <rect width="86" height="66" rx="10" fill="#fff" opacity=".95" />
+        <rect x="28" y="-12" width="30" height="16" rx="5" fill="#fff" opacity=".95" />
+        <rect x="0" y="26" width="86" height="10" fill={`hsl(${h} 50% 48%)`} opacity=".7" />
+      </g>
+      <g fill="#fff" opacity=".9">
+        <path d="M244 118a26 26 0 0 1 52 0z" />
+        <rect x="234" y="118" width="72" height="9" rx="4" />
+        <path d="M262 62l8 18 20 2-14 14 3 20-17-10-17 10 3-20-14-14 20-2z" opacity=".65" />
+      </g>
+      <g transform="translate(316 92)">
+        <path d="M22 0a22 22 0 0 0-22 22c0 16 22 40 22 40s22-24 22-40A22 22 0 0 0 22 0z" fill="#fff" opacity=".95" />
+        <circle cx="22" cy="22" r="9" fill={`hsl(${h} 55% 45%)`} />
+      </g>
+    </g>
+  )}
+
+  <rect y="184" width="400" height="16" fill="#0b1622" opacity=".2" />
+</svg>
+
+<style>
+  .guide-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+</style>
