@@ -4,8 +4,10 @@ import { REGIONS, sceneOf } from '../../data/regions';
 import { SOURCES, LAST_REVIEWED } from '../../consts';
 import { getCollection } from 'astro:content';
 import RegionArt from '../../components/art/RegionArt.astro';
+import RegionHero from '../../components/RegionHero.astro';
 import GuideArt from '../../components/art/GuideArt.astro';
 import { artOf } from '../../data/guide-art';
+import { lotsFor, lotDataDate, operatingText } from '../../data/parking-lots';
 
 export async function getStaticPaths() {
   return REGIONS.map((region) => ({
@@ -20,6 +22,10 @@ const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.d
 const related = guides.slice(0, 4);
 
 const others = REGIONS.filter((r) => r.slug !== region.slug && r.group === region.group).slice(0, 6);
+
+// 공공데이터가 준비된 경우에만 실제 주차장 목록을 노출합니다.
+const lotData = lotsFor(region.slug);
+const lotDate = lotDataDate();
 
 const pageTitle = `${region.name} 공영주차장 안내`;
 const description = `${region.officialName}의 공영주차장 운영 방식과 요금 체계의 특징, 이용 요령, 공식 확인처를 정리했습니다. ${region.summary}`;
@@ -74,9 +80,12 @@ const jsonLd = [
   updatedAt={LAST_REVIEWED}
   jsonLd={jsonLd}
 >
-  <div class="page-hero">
-    <RegionArt scene={sceneOf(region.slug)} hue={region.hue} label={region.name} />
-  </div>
+  <RegionHero
+    slug={region.slug}
+    scene={sceneOf(region.slug)}
+    hue={region.hue}
+    label={region.name}
+  />
 
   <p class="meta-line">
     <span class="badge">{region.group}</span>
@@ -111,6 +120,53 @@ const jsonLd = [
   <ul>
     {region.tips.map((t) => <li>{t}</li>)}
   </ul>
+
+  {lotData && lotData.lots.length > 0 && (
+    <>
+      <h2>{region.name}의 주요 공영주차장</h2>
+      <p>
+        공공데이터포털 「전국주차장정보표준데이터」에 등록된 {region.officialName} 지역 공영주차장은
+        모두 <strong>{lotData.total.toLocaleString()}곳</strong>입니다. 그중 주차구획이 많은 순으로
+        {lotData.lots.length}곳을 정리했습니다.
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">주차장명</th>
+              <th scope="col">구분</th>
+              <th scope="col">소재지</th>
+              <th scope="col">구획 수</th>
+              <th scope="col">요금</th>
+              <th scope="col">평일 운영</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lotData.lots.map((lot) => (
+              <tr>
+                <th scope="row" style="font-weight:700">{lot.name}</th>
+                <td>{lot.kind || '-'}</td>
+                <td>{lot.addr}</td>
+                <td style="text-align:right">{lot.slots ? lot.slots.toLocaleString() : '-'}</td>
+                <td>{lot.payType || '확인 필요'}</td>
+                <td>{operatingText(lot)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="notice">
+        <p style="margin:0">
+          <strong>출처</strong> — 행정안전부 「전국주차장정보표준데이터」(공공데이터포털).
+          {lotDate && <span> 이 사이트 반영일 {lotDate}.</span>} 원본 데이터의 기준일자는 지자체마다
+          다르며, 등록 이후 요금·운영시간이 바뀌었을 수 있습니다. 방문 전 현장 고시판이나 관리기관에
+          확인하세요.
+        </p>
+      </div>
+    </>
+  )}
 
   <h2>정확한 요금을 확인하는 방법</h2>
   <p>

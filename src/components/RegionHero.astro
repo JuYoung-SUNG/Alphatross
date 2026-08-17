@@ -1,0 +1,61 @@
+---
+/**
+ * 지역 페이지 상단 대표 이미지.
+ * 공공누리 사진이 준비되어 있으면 실사 사진 + 출처 표기,
+ * 없으면 기존 SVG 일러스트를 씁니다.
+ */
+import RegionArt from './art/RegionArt.astro';
+import { photoFor, photoSrc, creditLine } from '../data/photos';
+import type { RegionScene } from '../data/regions';
+
+export interface Props {
+  slug: string;
+  scene: RegionScene;
+  hue: number;
+  label: string;
+}
+const { slug, scene, hue, label } = Astro.props;
+const photo = photoFor(slug);
+---
+
+{photo ? (
+  <figure class="region-hero">
+    <img
+      src={photoSrc(slug)}
+      alt={`${label} 지역 전경 사진`}
+      width="1000"
+      height="500"
+      loading="eager"
+      decoding="async"
+    />
+    <figcaption>{creditLine(photo)}</figcaption>
+  </figure>
+) : (
+  <div class="page-hero">
+    <RegionArt scene={scene} hue={hue} label={label} />
+  </div>
+)}
+
+<style>
+  .region-hero {
+    margin: 0 0 1.8rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: var(--bg-soft);
+  }
+  .region-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+  }
+  .region-hero figcaption {
+    padding: .6rem 1rem;
+    font-size: .8rem;
+    color: var(--text-muted);
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+  }
+</style>

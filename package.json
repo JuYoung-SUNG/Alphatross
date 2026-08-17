@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "og": "node scripts/make-og.mjs"
+    "og": "node scripts/make-og.mjs",
+    "data": "node scripts/fetch-parking-data.mjs",
+    "photos": "node scripts/fetch-photos.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
