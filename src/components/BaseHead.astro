@@ -1,5 +1,5 @@
 ---
-import { SITE_NAME, SITE_DESCRIPTION, ADSENSE_CLIENT, PUBLISHER } from '../consts';
+import { SITE_NAME, SITE_DESCRIPTION, ADSENSE_CLIENT, PUBLISHER, normalizePath } from '../consts';
 import '../styles/global.css';
 
 export interface Props {
@@ -26,7 +26,7 @@ const {
 } = Astro.props;
 
 const siteUrl = Astro.site ?? new URL('https://example.com');
-const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', siteUrl).href;
+const canonical = new URL(normalizePath(Astro.url.pathname), siteUrl).href;
 const ogImage = new URL('/og-default.png', siteUrl).href;
 const fullTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
 

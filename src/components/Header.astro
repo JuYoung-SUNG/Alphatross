@@ -1,7 +1,7 @@
 ---
-import { MAIN_NAV, SITE_NAME } from '../consts';
+import { MAIN_NAV, SITE_NAME, normalizePath } from '../consts';
 
-const path = '/' + Astro.url.pathname.split('/').filter(Boolean).join('/');
+const path = normalizePath(Astro.url.pathname);
 const isCurrent = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 ---

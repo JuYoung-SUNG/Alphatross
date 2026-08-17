@@ -8,9 +8,12 @@ const SITE = process.env.SITE_URL || 'https://alphatross.pages.dev';
 
 export default defineConfig({
   site: SITE,
-  trailingSlash: 'ignore',
+  // Cloudflare Pages 는 /foo.html 을 /foo 로 서빙하고, 슬래시가 붙은 형태는 308 로 정리해 줍니다.
+  // 'file' 포맷을 쓰면 사이트가 내보내는 canonical·sitemap·내부 링크가 모두
+  // 서버가 실제로 200 을 주는 "슬래시 없는" 주소와 일치합니다.
+  trailingSlash: 'never',
   build: {
-    format: 'directory',
+    format: 'file',
     inlineStylesheets: 'auto',
   },
   integrations: [

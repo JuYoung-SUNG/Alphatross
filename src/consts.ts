@@ -25,6 +25,19 @@ export const ADSENSE_CLIENT = '';
 export const SITE_LAUNCH = '2026-08-17';
 export const LAST_REVIEWED = '2026-08-17';
 
+/**
+ * 빌드 산출물 경로를 사이트 표준 경로로 정규화합니다.
+ * build.format 이 'file' 이라 빌드 시점의 Astro.url.pathname 은 '/regions/seoul.html' 처럼
+ * 확장자가 붙습니다. canonical 과 메뉴 활성화 판정에는 '/regions/seoul' 형태가 필요합니다.
+ */
+export function normalizePath(pathname: string): string {
+  const p = pathname
+    .replace(/index\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '');
+  return p === '' ? '/' : p;
+}
+
 export type NavItem = { href: string; label: string };
 
 export const MAIN_NAV: NavItem[] = [
