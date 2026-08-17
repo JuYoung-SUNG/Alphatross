@@ -35,11 +35,16 @@ npm run og       # OG 이미지 재생성 (public/og-default.png)
 
 ### `astro.config.mjs`
 
-`SITE` 값이 배포 도메인입니다. Cloudflare 환경변수 `SITE_URL`로 덮어쓸 수 있습니다.
+`SITE` 값이 배포 도메인입니다. 현재 기본값은 실제 배포 주소인
+`https://alphatross.pages.dev` 이며, Cloudflare 환경변수 `SITE_URL`로 덮어쓸 수 있습니다.
+
+> 이 값은 canonical 태그와 sitemap에 그대로 들어갑니다. **커스텀 도메인을 연결하면
+> 반드시 이 값(또는 `SITE_URL` 환경변수)을 새 도메인으로 바꾸고 재배포**해야 합니다.
+> 존재하지 않는 도메인이 canonical에 들어가면 검색엔진이 색인을 거부할 수 있습니다.
 
 ### `public/robots.txt`
 
-마지막 줄 `Sitemap:` 주소를 실제 도메인으로 바꾸세요.
+마지막 줄 `Sitemap:` 주소도 도메인 변경 시 함께 바꿔야 합니다.
 
 ### `public/ads.txt`
 
